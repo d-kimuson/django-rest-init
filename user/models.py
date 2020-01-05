@@ -47,12 +47,26 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
+    def update(self, **kwargs):
+        print(self.is_authenticated)
+        new_password = kwargs.get('password')
+        if new_password is not None:
+            del kwargs['password']
+            self.set_password(new_password)
+
+        for attr in kwargs.keys():
+            setattr(self, attr, kwargs.get(attr))
+
+        self.save()
+        return self
+
     def to_dict(self):
         return {
             "pk": self.pk,
             "email": self.email,
             "is_staff": self.is_staff,
-            "is_superuser": self.is_superuser
+            "is_superuser": self.is_superuser,
+            "last_login": self.last_login
         }
 
     @classmethod
