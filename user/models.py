@@ -46,3 +46,27 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+    def to_dict(self):
+        return {
+            "pk": self.pk,
+            "email": self.email,
+            "is_staff": self.is_staff,
+            "is_superuser": self.is_superuser
+        }
+
+    @classmethod
+    def to_list(cls, base=None, **kwargs):
+        base = cls.objects.all() if base is None else base
+        try:
+            filtered = base.filter(**kwargs)
+        except AttributeError as e:
+            print(e)
+            filtered = []
+
+        return [user.to_dict() for user in filtered]
+
+    def __repr__(self):
+        return "{}. {}".format(self.pk, self.email)
+
+    __str__ = __repr__
