@@ -19,7 +19,7 @@ class UserViewSet(viewsets.ModelViewSet):
         except User.DoesNotExist as e:
             print(e)
             return Response({
-                "error_message": f"ユーザー: pk={pk} は存在しません"
+                "error_message": f"ユーザー<pk={pk}> は存在しません"
             })
 
         if user != request.user:
