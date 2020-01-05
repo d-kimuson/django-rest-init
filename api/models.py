@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class ToListMixin:
     @classmethod
-    def to_list(cls, base=None, **kwargs):
+    def to_list(cls: models.Model, base=None, **kwargs):
         base = cls.objects.all() if base is None else base
         try:
             filtered = base.filter(**kwargs)
