@@ -117,3 +117,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     )
 }
+
+if DEBUG:  # admin の ログイン を引き継ぐ
+    REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    )
